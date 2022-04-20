@@ -1,0 +1,28 @@
+.library {
+  margin: 1rem;
+  padding: 1rem;
+  background-color: #230052;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+}
+
+
+.library:hover,
+.library:active {
+  background: #741188;
+  border-color: #741188;
+}
+
+.library h2 {
+  font-size: 2rem;
+  color: #f7e702;
+}
+
+.library h3 {
+  color: #eccf77;
+  margin: 0;
+  font-size: 1rem;
+}
