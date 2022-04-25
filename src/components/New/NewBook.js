@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Button from '../UI/Button/Button';
 
-import classes from './AddBook.module.css';
+import classes from './NewBook.module.css';
 
-function AddBook(props) {
+function NewBook(props) {
 
     const [titleState, setTiteleState] = useState("");
     const [authorState, setAuthorState] = useState(null);
@@ -91,4 +91,4 @@ function AddBook(props) {
     );
 }
 
-export default AddBook;
+export default NewBook;

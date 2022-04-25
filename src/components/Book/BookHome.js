@@ -3,10 +3,10 @@ import NewAuthor from '../New/NewAuthor';
 import Button from '../UI/Button/Button';
 
 import Card from '../UI/Card/Card';
-import AddBook from './AddBook';
 import BookList from './BooksList';
 import classes from './BookHome.module.css';
 import AuthContext from '../../store/auth-context';
+import NewBook from '../New/NewBook';
 
 const BookHome = (props) => {
   const [authors, setAuthors] = useState([]);
@@ -169,7 +169,7 @@ const BookHome = (props) => {
       </Card>
       <Card className={classes.section}>
         {!isEditingBook && (<Button className={classes.addNewButton} type="button" onClick={startIsEditingBook}>Add New Book</Button>)}
-        {isEditingBook && (<AddBook authors={authors} books={books} onCancel={stopIsEditingBook} onAddBook={saveBookHandler} onUpdateAuthorsBook={updateAuthorsBookHandler} />)}
+        {isEditingBook && (<NewBook authors={authors} books={books} onCancel={stopIsEditingBook} onAddBook={saveBookHandler} onUpdateAuthorsBook={updateAuthorsBookHandler} />)}
       </Card>
       <Card className={classes.section}>
         <BookList books={books} />
