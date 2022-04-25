@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import AddAuthor from '../Author/AddAuthor';
+import NewAuthor from '../New/NewAuthor';
 import Button from '../UI/Button/Button';
 
 import Card from '../UI/Card/Card';
@@ -165,7 +165,7 @@ const BookHome = (props) => {
       <h3>{ctx.clickedLibrary.address}</h3>
       <Card className={classes.section}>
         {!isEditingAuthor && (<Button className={classes.addNewButton} type="button" onClick={startIsEditingAuthor}>Add New Author</Button>)}
-        {isEditingAuthor && (<AddAuthor onCancel={stopIsEditingAuthor} onAddAuthor={saveAuthorHandler} />)}
+        {isEditingAuthor && (<NewAuthor onCancel={stopIsEditingAuthor} onAddAuthor={saveAuthorHandler} />)}
       </Card>
       <Card className={classes.section}>
         {!isEditingBook && (<Button className={classes.addNewButton} type="button" onClick={startIsEditingBook}>Add New Book</Button>)}

@@ -4,7 +4,7 @@ import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 import AuthContext from '../../store/auth-context';
-import Input from '../UI/Input/Input';
+import InputLogin from '../UI/Input/InputLogin';
 
 const emailReducer = (state, action) => {
 
@@ -93,7 +93,7 @@ const Login = () => {
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
-        <Input
+        <InputLogin
           ref={emailInputRef}
           id={"email"}
           label={"E-Mail"}
@@ -103,7 +103,7 @@ const Login = () => {
           onChange={emailChangeHandler}
           onBlur={validateEmailHandler} />
 
-        <Input
+        <InputLogin
           ref={passwordInutRef}
           id={"password"}
           label={"Password"}
