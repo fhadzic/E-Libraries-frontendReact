@@ -1,12 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import NewAuthor from '../New/NewAuthor';
+import NewAuthor from '../AddNew/NewAuthor';
 import Button from '../UI/Button/Button';
 
 import Card from '../UI/Card/Card';
 import BookList from './BooksList';
 import classes from './BookHome.module.css';
 import AuthContext from '../../store/auth-context';
-import NewBook from '../New/NewBook';
+import NewBook from '../AddNew/NewBook';
 
 const BookHome = (props) => {
   const [authors, setAuthors] = useState([]);
