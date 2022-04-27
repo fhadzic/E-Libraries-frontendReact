@@ -79,8 +79,12 @@ const BookHome = (props) => {
 
 
   function updateAuthorId(author, id) {
+    const newAuthor = {
+      ...author,
+      id: id,
+    };
     setAuthors((prevAuthors) => {
-      return [{ ...author, id }, ...prevAuthors];
+      return [newAuthor, ...prevAuthors];
     });
   }
 
