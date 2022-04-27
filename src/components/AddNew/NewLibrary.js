@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import Button from '../UI/Button/Button';
 
-import classes from './AddLibrary.module.css';
+import classes from "../UI/Input/Input.module.css"
 
-function AddLibrary(props) {
+function NewLibrary(props) {
     const nameRef = useRef('');
     const openingDateRef = useRef('');
     const addressRef = useRef('');
@@ -29,9 +29,9 @@ function AddLibrary(props) {
         props.onAddLibrary(library);
 
         fetch("http://localhost:8080/library/add", {
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(library),
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(library),
         })
 
     }
@@ -44,7 +44,7 @@ function AddLibrary(props) {
             </div>
             <div className={classes.control}>
                 <label htmlFor='date'>Opening Date</label>
-                <input type='text' id='date' ref={openingDateRef} />
+                <input type='date' id='date' ref={openingDateRef} />
             </div>
             <div className={classes.control}>
                 <label htmlFor='opening-text'>Address</label>
@@ -55,4 +55,23 @@ function AddLibrary(props) {
     );
 }
 
-export default AddLibrary;
+export default NewLibrary;
+
+
+/*
+<form onSubmit={submitHandler}>
+            <div className={classes.control}>
+                <label htmlFor='title'>Library Name</label>
+                <input type='text' id='title' ref={nameRef} />
+            </div>
+            <div className={classes.control}>
+                <label htmlFor='date'>Opening Date</label>
+                <input type='datenp' id='date' ref={openingDateRef} />
+            </div>
+            <div className={classes.control}>
+                <label htmlFor='opening-text'>Address</label>
+                <input id='opening-text' ref={addressRef}></input>
+            </div>
+            <Button type="submit">Add Library</Button>
+        </form>
+*/

@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Button from '../UI/Button/Button';
-
 import Card from '../UI/Card/Card';
-import AddLibrary from './AddLibrary';
-import classes from './HomeLibrary.module.css';
 import LibraryList from './LibraryList';
+
+import classes from './HomeLibrary.module.css';
+import NewLibrary from '../AddNew/NewLibrary';
 
 const HomeLibrary = (props) => {
   const [libraries, setLibraries] = useState([]);
@@ -75,7 +75,7 @@ useEffect(() => {
     <Card className={classes.library}>
       <Card className={classes.section}>
         {!isEditing && (<Button type="button" onClick={startIsEditing}>Add New Library</Button>)}
-        {isEditing && (<AddLibrary onCancel={stopIsEditing} onAddLibrary={saveLibraryHandler} />)}
+        {isEditing && (<NewLibrary onCancel={stopIsEditing} onAddLibrary={saveLibraryHandler} />)}
       </Card>
       <Card className={classes.section}>
         <LibraryList libraries={libraries} />
