@@ -9,7 +9,8 @@
     text-align: left;
 }
 
-.control input {
+.control input, 
+.control select {
     display: block;
     width: 100%;
     font: inherit;
@@ -18,13 +19,15 @@
     border: 1px solid #ccc;
 }
 
-.control input:focus {
+.control input:focus, 
+.control select:focus{
     outline: none;
     border-color: #4f005f;
     background: #f6dbfc;
 }
 
-.control.invalid input {
+.control.invalid input,
+.control.invalid select {
     border-color: red;
     background: #fbdada;
 }

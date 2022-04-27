@@ -1,39 +1,94 @@
-import React, { useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import Button from '../UI/Button/Button';
+import Input from '../UI/Input/Input';
 
-import classes from './NewBook.module.css';
+import classes from "../UI/Input/Input.module.css"
+
+const titleReducer = (state, action) => {
+    if (action.type === "USER_INPUT") {
+        return { value: action.val, isValid: action.val.trim().length > 2 };
+    } else if (action.type === "INPUT_BLUR") {
+        return { value: state.value, isValid: state.value.trim().length > 2 };
+    }
+
+    return { value: '', isValid: false };
+}
+
+const authorReducer = (state, action) => {
+    if (action.type === "USER_INPUT") {
+        return { value: action.val, isValid: action.val !== null };
+    } else if (action.type === "INPUT_BLUR") {
+        return { value: state.value, isValid: state.value !== null };
+    }
+
+    return { value: null, isValid: false };
+}
 
 function NewBook(props) {
 
-    const [titleState, setTiteleState] = useState("");
-    const [authorState, setAuthorState] = useState(null);
+    const [formIsValid, setFormIsValid] = useState(false);
 
-    const titleInputChangeHandler = (event) => {
-        setTiteleState(event.target.value);
+    const [titleState, dispatchTitle] = useReducer(titleReducer, { value: '', isValid: null });
+    const [authorIdState, dispatchAuthor] = useReducer(authorReducer, { value: null, isValid: null });
+
+    const titleRef = useRef();
+    const authorIdRef = useRef();
+
+    const { isValid: isTitleValid } = titleState;
+    const { isValid: isAuthorValid } = authorIdState;
+
+
+    useEffect(() => {
+        const identifier = setTimeout(() => {
+            setFormIsValid(
+                isTitleValid && isAuthorValid
+            );
+        }, 500)
+
+        return (() => {
+            clearTimeout(identifier);
+        })
+    }, [isTitleValid, isAuthorValid]);
+
+
+    const titleChangeHandler = (event) => {
+        dispatchTitle({ type: "USER_INPUT", val: event.target.value });
     }
 
-    const authorSelectChangeHandler = (event) => {
-        setAuthorState(event.target.value);
+    const validateTitleHandler = () => {
+        dispatchTitle({ type: "INPUT_BLUR" });
     }
 
+    const authorChangeHandler = (event) => {
+        dispatchAuthor({ type: "USER_INPUT", val: event.target.value });
+    }
+
+    const validateAuthorHandler = () => {
+        dispatchAuthor({ type: "INPUT_BLUR" });
+    }
+    /*
+        const authorSelectChangeHandler = (event) => {
+            setAuthorState(event.target.value);
+        }
+    */
     const saveBook = () => {
 
         let authors = props.authors;
         let authorBook = null;
 
         for (const key in authors) {
-            if (authors[key].id === parseInt(authorState)) {
+            if (authors[key].id === parseInt(authorIdState.value)) {
                 authorBook = authors[key];
             }
         }
         if (authorBook !== null) {
             const book = {
                 id: Math.random().toString(),
-                title: titleState,
+                title: titleState.value,
                 authors: [authorBook]
             };
 
-            props.onAddBook(book, authorState);
+            props.onAddBook(book, authorIdState.value);
         }
 
     }
@@ -43,43 +98,56 @@ function NewBook(props) {
 
         // could add validation here...
 
-        if (titleState.trim().length === 0 || authorState === null) {
+
+        if (titleState.value.trim().length === 0 && authorIdState.value === null) {
             props.onCancel();
             return;
-        }
+        } else if (formIsValid){
 
-        let allBooks = props.books;
+            let allBooks = props.books;
 
-        for (const key in allBooks) {
-            if (titleState.trim() === allBooks[key].title.trim()) {
-                let authorsBook = allBooks[key].authors;
-                for (const i in authorsBook) {
-                    if (parseInt(authorsBook[i].id) === parseInt(authorState)) {
-                        setTiteleState("Postoji knjiga sa zadanim autorom");
-                        return;
+            for (const key in allBooks) {
+                if (titleState.value.trim() === allBooks[key].title.trim()) {
+                    let authorsBook = allBooks[key].authors;
+                    for (const i in authorsBook) {
+                        if (parseInt(authorsBook[i].id) === parseInt(authorIdState.value)) {
+                            //setTiteleState("Postoji knjiga sa zadanim autorom");
+                            return;
+                        }
                     }
+
+                    props.onUpdateAuthorsBook(allBooks[key], authorIdState.value, true);
+                    //setTiteleState("Dodan novi author");
+                    return;
                 }
-
-                props.onUpdateAuthorsBook(allBooks[key], authorState, true);
-                setTiteleState("Dodan novi author");
-                return;
             }
-        }
 
-        saveBook();
-        setTiteleState("");
+            saveBook();
+
+        }else if (!isAuthorValid) {
+            dispatchAuthor({ type: "INPUT_BLUR" });
+            authorIdRef.current.focus();
+        }else{
+            titleRef.current.focus();
+        }
 
     }
 
     return (
         <form onSubmit={submitHandler}>
-            <div className={classes.control}>
-                <label htmlFor='title'>Title Book</label>
-                <input type='text' id='title' value={titleState} onChange={titleInputChangeHandler} />
-            </div>
-            <div className={classes.control}>
-                <label htmlFor='title'>Author</label>
-                <select value={authorState} onChange={authorSelectChangeHandler}>
+            <Input
+                ref={titleRef}
+                id={'title'}
+                label={'Title Book'}
+                type={'text'}
+                isValid={isTitleValid}
+                value={titleState.value}
+                onChange={titleChangeHandler}
+                onBlur={validateTitleHandler}
+            />
+            <div className={`${classes.control} ${isAuthorValid === false ? classes.invalid : ''}`}>
+                <label htmlFor='author'>Author</label>
+                <select ref={authorIdRef} value={authorIdState.value} onChange={authorChangeHandler} onBlur={validateAuthorHandler}>
                     <option disabled selected value> -- select an option -- </option>
                     {props.authors.map((author) => (
                         <option value={author.id}>{`${author.firstName} ${author.lastName}`}</option>
