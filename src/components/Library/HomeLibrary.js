@@ -45,7 +45,7 @@ const HomeLibrary = (props) => {
       ...library,
       id: id,
     };
-    
+
     setLibraries((prevLibraries) => {
       return [newLibrary, ...prevLibraries];
     });
@@ -70,21 +70,6 @@ const HomeLibrary = (props) => {
     setIsEditing(false);
   }
 
-  /*
-    let content = <p>Found no movies.</p>;
-  
-    if (libraries.length > 0) {
-      content = <LibraryList movies={libraries} />;
-    }
-  
-    if (isLoading) {
-      content = <p>Loading...</p>;
-    }
-  
-    if (error) {
-      content = error;
-    }
-  */
   return (
     <Card className={classes.library}>
       <Card className={classes.section}>
@@ -97,8 +82,5 @@ const HomeLibrary = (props) => {
     </Card>
   );
 };
-/*
-<h1>Welcome back!</h1>
-<Button onClick={ctx.onLogout}>Logout</Button>
-*/
+
 export default HomeLibrary;

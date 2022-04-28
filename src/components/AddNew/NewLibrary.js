@@ -175,22 +175,3 @@ function NewLibrary(props) {
 }
 
 export default NewLibrary;
-
-
-/*
-<form onSubmit={submitHandler}>
-            <div className={classes.control}>
-                <label htmlFor='title'>Library Name</label>
-                <input type='text' id='title' ref={nameRef} />
-            </div>
-            <div className={classes.control}>
-                <label htmlFor='date'>Opening Date</label>
-                <input type='datenp' id='date' ref={openingDateRef} />
-            </div>
-            <div className={classes.control}>
-                <label htmlFor='opening-text'>Address</label>
-                <input id='opening-text' ref={addressRef}></input>
-            </div>
-            <Button type="submit">Add Library</Button>
-        </form>
-*/
